@@ -53,7 +53,7 @@ ans = input("icon or image:")
 delete_all()
 make_matrix()
 cap = cv2.VideoCapture('ha-3.mp4')
-time.sleep(1)
+capOriginal = cv2.VideoCapture('ha.mp4')
 # if ans == "icon":
 #     while cap.isOpened():
 #         ret, frame = cap.read()
@@ -73,12 +73,13 @@ time.sleep(1)
 #             break
 while cap.isOpened():
     ret, frame = cap.read()
+    frameOr = capOriginal.read()[1]
     if ret:
         for i in range(len(frame)):
             for o in range(len(frame[i])):
                 path = dirPath + "/" + str(o) + "-" + str(i)
                 replace(path, np.sum((frame[i])[o]))
-        cv2.imshow('bad apple', frame)
+        cv2.imshow('bad apple', frameOr)
 
         # Press Q on keyboard to  exit
         if cv2.waitKey(25) & 0xFF == ord('q'):
@@ -89,6 +90,6 @@ while cap.isOpened():
         break
 # When everything done, release the video capture object
 cap.release()
-
+capOriginal.release()
 # Closes all the frames
 cv2.destroyAllWindows()
