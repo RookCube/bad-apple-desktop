@@ -5,6 +5,7 @@ import shutil
 import time
 from PIL import Image
 
+waitSecond = 1  # render time
 dirPath = "C:/Users/timyr/Desktop"
 blackImg = "C:/Users/timyr/PycharmProjects/pythonProject9/black.png"
 whiteImg = "C:/Users/timyr/PycharmProjects/pythonProject9/white.png"
@@ -23,7 +24,7 @@ def replace(where, whiteOrBlackMake):
     try:
         why = where + ".png"
         # check that image correct color
-        if np.sum((Image.open(why).load())[0, 0]) + 100 > whiteOrBlackMake/3:
+        if np.sum((Image.open(why).load())[0, 0]) + 100 > whiteOrBlackMake / 3:
             if whiteOrBlackMake > 255:
                 print(why, "dont replace")
             else:
@@ -75,11 +76,22 @@ while cap.isOpened():
     ret, frame = cap.read()
     frameOr = capOriginal.read()[1]
     if ret:
+        wait = time.time()
         for i in range(len(frame)):
             for o in range(len(frame[i])):
                 path = dirPath + "/" + str(o) + "-" + str(i)
                 replace(path, np.sum((frame[i])[o]))
-        cv2.imshow('bad apple', frameOr)
+        wait2 = time.time()
+        trig = wait2-wait
+
+        if trig < waitSecond:
+            time.sleep(waitSecond - trig)
+        else:
+            print("bruh2")
+            break
+        image2 = cv2.putText(frameOr, str(trig), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2,
+                             cv2.LINE_AA)  # put text on img
+        cv2.imshow('bad apple', image2)
 
         # Press Q on keyboard to  exit
         if cv2.waitKey(25) & 0xFF == ord('q'):
