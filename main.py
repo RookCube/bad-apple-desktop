@@ -7,8 +7,8 @@ from PIL import Image
 
 waitSecond = 1  # render time
 dirPath = "C:/Users/timyr/Desktop"
-blackImg = "C:/Users/timyr/PycharmProjects/pythonProject9/black.png"
-whiteImg = "C:/Users/timyr/PycharmProjects/pythonProject9/white.png"
+blackImg = "black.png"
+whiteImg = "white.png"
 
 
 def delete_all():
